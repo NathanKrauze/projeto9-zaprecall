@@ -5,38 +5,40 @@ import zapIcon from '../assets/icone_certo.png'
 import almostIcon from '../assets/icone_quase.png'
 import forgotIcon from '../assets/icone_erro.png'
 
-export default function Flashcard(){
+export default function Flashcard({card, cards}){
+
+//     <FlashcardQuestion>
+//     <h1>O que é JSX?</h1>
+//     <img src={turnCard}/>
+// </FlashcardQuestion>
+// <FlashcardAnswer>
+//     <h1>JSX é uma sintaxe para escrever HTML dentro do JS </h1>
+//     <ContainerButtons>
+//         <ForgotButton>Não lembrei</ForgotButton>
+//         <AlmostButton>Quase não lembrei</AlmostButton>
+//         <ZapButton>Zap!</ZapButton>
+//     </ContainerButtons>
+// </FlashcardAnswer>
+// <FlashcardDefault zapOrNot='zap'>
+//     <h1>Pergunta 4</h1>
+//     <img src={zapIcon} />
+// </FlashcardDefault>
+// <FlashcardDefault zapOrNot='almost'>
+//     <h1>Pergunta 5</h1>
+//     <img src={almostIcon} />
+// </FlashcardDefault>
+// <FlashcardDefault  zapOrNot='forgot'>
+//     <h1>Pergunta 6</h1>
+//     <img src={forgotIcon} />
+// </FlashcardDefault>
+
     
 
     return(
         <>
             <FlashcardDefault>
-                <h1>Pergunta 1</h1>
+                <h1>Pergunta {cards.indexOf(card) + 1}</h1>
                 <img src={playCard}/>
-            </FlashcardDefault>
-            <FlashcardQuestion>
-                <h1>O que é JSX?</h1>
-                <img src={turnCard}/>
-            </FlashcardQuestion>
-            <FlashcardAnswer>
-                <h1>JSX é uma sintaxe para escrever HTML dentro do JS </h1>
-                <ContainerButtons>
-                    <ForgotButton>Não lembrei</ForgotButton>
-                    <AlmostButton>Quase não lembrei</AlmostButton>
-                    <ZapButton>Zap!</ZapButton>
-                </ContainerButtons>
-            </FlashcardAnswer>
-            <FlashcardDefault zapOrNot='zap'>
-                <h1>Pergunta 4</h1>
-                <img src={zapIcon} />
-            </FlashcardDefault>
-            <FlashcardDefault zapOrNot='almost'>
-                <h1>Pergunta 5</h1>
-                <img src={almostIcon} />
-            </FlashcardDefault>
-            <FlashcardDefault  zapOrNot='forgot'>
-                <h1>Pergunta 6</h1>
-                <img src={forgotIcon} />
             </FlashcardDefault>
         </>
     )
@@ -54,7 +56,7 @@ function verifyResultColor(result){
             return '#FF3030';
             break;
         default:
-            return '#333333'
+            return '#333333';
     }
 }
 

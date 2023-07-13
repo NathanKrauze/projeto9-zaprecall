@@ -1,9 +1,9 @@
 import { styled } from "styled-components"
 
-export default function Footer(){
+export default function Footer({cardsNumber}){
     return(
         <DivFooter>
-            <h1>0/4 CONCLUÍDOS</h1>
+            <h1>0/{cardsNumber} CONCLUÍDOS</h1>
         </DivFooter>
     )
 }

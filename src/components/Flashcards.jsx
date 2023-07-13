@@ -1,10 +1,10 @@
 import { styled } from "styled-components"
 import Flashcard from "./Flashcard";
 
-export default function Flashcards(){
+export default function Flashcards({cards}){
     return(
         <ContainerFlashcards>
-            <Flashcard />
+            {cards.map((card, index) => <Flashcard card={card} cards={cards}/>) }
         </ContainerFlashcards>
     )
 }

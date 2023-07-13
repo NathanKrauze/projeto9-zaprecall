@@ -3,8 +3,12 @@ import { styled } from 'styled-components';
 import Footer from './components/Footer';
 import logo from './assets/logo.png';
 import Flashcards from './components/Flashcards';
+import cards from './constants/cards';
 
 export default function App() {
+
+  console.log(cards)
+
     return (
       <>
         <ContentContainer>
@@ -12,8 +16,8 @@ export default function App() {
             <img src={logo}/>
             <h1>ZapRecall</h1>
           </ContainerLogo>
-          <Flashcards />
-          <Footer />
+          <Flashcards cards={cards}/>
+          <Footer cardsNumber={cards.length}/>
         </ContentContainer>
       </>
     )
