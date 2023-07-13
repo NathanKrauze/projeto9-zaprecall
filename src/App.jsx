@@ -7,8 +7,6 @@ import cards from './constants/cards';
 
 export default function App() {
 
-  console.log(cards)
-
     return (
       <>
         <ContentContainer>

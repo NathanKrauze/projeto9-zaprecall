@@ -5,47 +5,51 @@ import zapIcon from '../assets/icone_certo.png'
 import almostIcon from '../assets/icone_quase.png'
 import forgotIcon from '../assets/icone_erro.png'
 
-export default function Flashcard({card, cards}){
+export default function Flashcard({ card, cards, turnQuestion, setTurnQuestion, turnAnswer, setTurnAnswer }) {
 
-//     <FlashcardQuestion>
-//     <h1>O que é JSX?</h1>
-//     <img src={turnCard}/>
-// </FlashcardQuestion>
-// <FlashcardAnswer>
-//     <h1>JSX é uma sintaxe para escrever HTML dentro do JS </h1>
-//     <ContainerButtons>
-//         <ForgotButton>Não lembrei</ForgotButton>
-//         <AlmostButton>Quase não lembrei</AlmostButton>
-//         <ZapButton>Zap!</ZapButton>
-//     </ContainerButtons>
-// </FlashcardAnswer>
-// <FlashcardDefault zapOrNot='zap'>
-//     <h1>Pergunta 4</h1>
-//     <img src={zapIcon} />
-// </FlashcardDefault>
-// <FlashcardDefault zapOrNot='almost'>
-//     <h1>Pergunta 5</h1>
-//     <img src={almostIcon} />
-// </FlashcardDefault>
-// <FlashcardDefault  zapOrNot='forgot'>
-//     <h1>Pergunta 6</h1>
-//     <img src={forgotIcon} />
-// </FlashcardDefault>
+    function showAnswer(card){
+        setTurnAnswer([...turnAnswer, card])
+        let newArray = turnQuestion
+        newArray.splice(turnQuestion.indexOf(card), 1)
+        setTurnQuestion(newArray)
+    }
 
-    
+    function answerOptions (){
+        
+    }
 
-    return(
-        <>
+    if (turnQuestion.includes(card)) {
+        return (
+            <>
+                <FlashcardQuestion>
+                    <h1>{card.question}</h1>
+                    <img src={turnCard} onClick={()=>showAnswer(card)}/>
+                </FlashcardQuestion>
+            </>
+        )
+    } else if (turnAnswer.includes(card)) {
+        return (
+            <FlashcardAnswer>
+                <h1>{card.answer} </h1>
+                <ContainerButtons>
+                    <ForgotButton>Não lembrei</ForgotButton>
+                    <AlmostButton>Quase não lembrei</AlmostButton>
+                    <ZapButton>Zap!</ZapButton>
+                </ContainerButtons>
+            </FlashcardAnswer>
+        )
+    } else {
+        return (
             <FlashcardDefault>
                 <h1>Pergunta {cards.indexOf(card) + 1}</h1>
-                <img src={playCard}/>
+                <img src={playCard} onClick={()=>setTurnQuestion([...turnQuestion, card])}/>
             </FlashcardDefault>
-        </>
-    )
+        )
+    }
 }
 
-function verifyResultColor(result){
-    switch(result){
+function verifyResultColor(result) {
+    switch (result) {
         case 'zap':
             return '#2FBE34';
             break;
@@ -76,7 +80,7 @@ const FlashcardDefault = styled.li`
         font-family: 'Recursive', sans-serif;
         font-weight: 700;
         font-size: 16px;
-        color: ${props=> verifyResultColor(props.zapOrNot)};
+        color: ${props => verifyResultColor(props.zapOrNot)};
         text-decoration: ${props => !props.zapOrNot ? 'none' : 'line-through'};
     }
     img{
@@ -89,6 +93,7 @@ const FlashcardQuestion = styled.li`
     box-sizing: border-box;
     display: flex;
     flex-direction: column; 
+    justify-content: space-between;
     width: 300px;
     height: 130px;
     background-color: #FFFFD4;
@@ -97,7 +102,7 @@ const FlashcardQuestion = styled.li`
     margin-bottom: 25px;
     img{
         position: relative;
-        top:50px;
+        bottom: 12px;
         left:254px;
         width: 30px;
         height: auto;
