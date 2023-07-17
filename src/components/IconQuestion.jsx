@@ -7,19 +7,19 @@ export default function IconQuestion({status, showQuestion}) {
     switch (status) {
         case 'zap':
             return (
-                <img src={zapIcon} alt='zap' />
+                <img src={zapIcon} alt='zap' data-test="zap-icon" />
             )
         case 'almost':
             return (
-                <img src={almostIcon} alt='almost' />
+                <img src={almostIcon} alt='almost' data-test="partial-icon"/>
             )
         case 'forgot':
             return (
-                <img src={forgotIcon} alt='forgot' />
+                <img src={forgotIcon} alt='forgot' data-test="no-icon"/>
             )
         case 'default':
             return (
-                <img src={playIcon} onClick={showQuestion} alt='play' />
+                <img src={playIcon} onClick={showQuestion} alt='play' data-test='play-btn'/>
             )
 
     }

@@ -30,20 +30,20 @@ export default function Flashcard({ card, cards, setCounter, counter }) {
     if (!turnQuestion) {
         if (turnAnswer) {
             return (
-                <FlashcardAnswer>
-                    <h1>{card.answer} </h1>
+                <FlashcardAnswer data-test="flashcard">
+                    <h1 data-test="flashcard-text">{card.answer} </h1>
                     <ContainerButtons>
-                        <Buttons color={FORGOT} onClick={() => answerOptions('forgot')}>Não lembrei</Buttons>
-                        <Buttons color={ALMOST} onClick={() => answerOptions('almost')}>Quase não lembrei</Buttons>
-                        <Buttons color={ZAP} onClick={() => answerOptions('zap')}>Zap!</Buttons>
+                        <Buttons color={FORGOT} onClick={() => answerOptions('forgot')} data-test="no-btn">Não lembrei</Buttons>
+                        <Buttons color={ALMOST} onClick={() => answerOptions('almost')} data-test="partial-btn">Quase não lembrei</Buttons>
+                        <Buttons color={ZAP} onClick={() => answerOptions('zap')} data-test="zap-btn">Zap!</Buttons>
                     </ContainerButtons>
                 </FlashcardAnswer>
             )
         } else {
             return (
                 <>
-                    <FlashcardDefault status={status}>
-                        <h1>Pergunta {cards.indexOf(card) + 1}</h1>
+                    <FlashcardDefault status={status} data-test="flashcard">
+                        <h1 data-test="flashcard-text">Pergunta {cards.indexOf(card) + 1}</h1>
                         <IconQuestion status={status} showQuestion={showQuestion}/>
                     </FlashcardDefault>
                 </>
@@ -51,9 +51,9 @@ export default function Flashcard({ card, cards, setCounter, counter }) {
         }
     } else {
         return (
-            <FlashcardQuestion>
-                <h1>{card.question}</h1>
-                <img src={turnCard} onClick={() => showAnswer(card)} />
+            <FlashcardQuestion data-test="flashcard">
+                <h1 data-test="flashcard-text">{card.question}</h1>
+                <img src={turnCard} onClick={() => showAnswer(card)} data-test="turn-btn"/>
             </FlashcardQuestion>
         )
     }
