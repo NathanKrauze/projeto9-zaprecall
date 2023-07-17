@@ -2,21 +2,16 @@ import { styled } from "styled-components"
 import Flashcard from "./Flashcard";
 import { useState } from "react";
 
-export default function Flashcards({cards}){
+export default function Flashcards({ cards, setCounter, counter }) {
 
-    const[ turnQuestion, setTurnQuestion] = useState([])
-    const[ turnAnswer, setTurnAnswer] = useState([])
-
-    return(
+    return (
         <ContainerFlashcards>
-            {cards.map((card, index) => 
-                <Flashcard 
-                    card={card} 
+            {cards.map((card) =>
+                <Flashcard
+                    card={card}
                     cards={cards}
-                    turnQuestion={turnQuestion}
-                    setTurnQuestion={setTurnQuestion}
-                    turnAnswer={turnAnswer}
-                    setTurnAnswer={setTurnAnswer}
+                    setCounter={setCounter}
+                    counter={counter}
                 />
             )}
         </ContainerFlashcards>

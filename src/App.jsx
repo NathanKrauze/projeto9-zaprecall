@@ -7,19 +7,21 @@ import cards from './constants/cards';
 
 export default function App() {
 
-    return (
-      <>
-        <ContentContainer>
-          <ContainerLogo>
-            <img src={logo}/>
-            <h1>ZapRecall</h1>
-          </ContainerLogo>
-          <Flashcards cards={cards}/>
-          <Footer cardsNumber={cards.length}/>
-        </ContentContainer>
-      </>
-    )
-  
+  const [ counter, setCounter] = useState(0);
+
+  return (
+    <>
+      <ContentContainer>
+        <ContainerLogo>
+          <img src={logo} />
+          <h1>ZapRecall</h1>
+        </ContainerLogo>
+        <Flashcards cards={cards} setCounter={setCounter} counter={counter}/>
+        <Footer cardsNumber={cards.length} counter={counter}/>
+      </ContentContainer>
+    </>
+  )
+
 }
 
 const ContentContainer = styled.div`

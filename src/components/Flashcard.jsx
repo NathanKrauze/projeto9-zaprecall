@@ -1,66 +1,61 @@
 import { styled } from 'styled-components';
-import playCard from '../assets/seta_play.png'
 import turnCard from '../assets/seta_virar.png'
-import zapIcon from '../assets/icone_certo.png'
-import almostIcon from '../assets/icone_quase.png'
-import forgotIcon from '../assets/icone_erro.png'
+import { useState } from 'react';
+import { ZAP, ALMOST, FORGOT, DEFAULT} from '../constants/colors'
+import IconQuestion from './IconQuestion';
 
-export default function Flashcard({ card, cards, turnQuestion, setTurnQuestion, turnAnswer, setTurnAnswer }) {
+export default function Flashcard({ card, cards, setCounter, counter }) {
 
-    function showAnswer(card){
-        setTurnAnswer([...turnAnswer, card])
-        let newArray = turnQuestion
-        newArray.splice(turnQuestion.indexOf(card), 1)
-        setTurnQuestion(newArray)
+    const [ turnQuestion, setTurnQuestion ] = useState(false);
+    const [ turnAnswer, setTurnAnswer ] = useState(false);
+    const [ status, setStatus ] = useState('default');
+
+    function showQuestion () {
+        if(status === 'default'){
+            setTurnQuestion(true);
+        }
     }
 
-    function answerOptions (){
-        
+    function showAnswer() {
+        setTurnAnswer(true);
+        setTurnQuestion(false);
     }
 
-    if (turnQuestion.includes(card)) {
-        return (
-            <>
-                <FlashcardQuestion>
-                    <h1>{card.question}</h1>
-                    <img src={turnCard} onClick={()=>showAnswer(card)}/>
-                </FlashcardQuestion>
-            </>
-        )
-    } else if (turnAnswer.includes(card)) {
-        return (
-            <FlashcardAnswer>
-                <h1>{card.answer} </h1>
-                <ContainerButtons>
-                    <ForgotButton>Não lembrei</ForgotButton>
-                    <AlmostButton>Quase não lembrei</AlmostButton>
-                    <ZapButton>Zap!</ZapButton>
-                </ContainerButtons>
-            </FlashcardAnswer>
-        )
+    function answerOptions(resp){
+        setStatus(resp);
+        setTurnAnswer(false);
+        setCounter(counter + 1);
+    }
+
+    if (!turnQuestion) {
+        if (turnAnswer) {
+            return (
+                <FlashcardAnswer>
+                    <h1>{card.answer} </h1>
+                    <ContainerButtons>
+                        <Buttons color={FORGOT} onClick={() => answerOptions('forgot')}>Não lembrei</Buttons>
+                        <Buttons color={ALMOST} onClick={() => answerOptions('almost')}>Quase não lembrei</Buttons>
+                        <Buttons color={ZAP} onClick={() => answerOptions('zap')}>Zap!</Buttons>
+                    </ContainerButtons>
+                </FlashcardAnswer>
+            )
+        } else {
+            return (
+                <>
+                    <FlashcardDefault status={status}>
+                        <h1>Pergunta {cards.indexOf(card) + 1}</h1>
+                        <IconQuestion status={status} showQuestion={showQuestion}/>
+                    </FlashcardDefault>
+                </>
+            )
+        }
     } else {
         return (
-            <FlashcardDefault>
-                <h1>Pergunta {cards.indexOf(card) + 1}</h1>
-                <img src={playCard} onClick={()=>setTurnQuestion([...turnQuestion, card])}/>
-            </FlashcardDefault>
+            <FlashcardQuestion>
+                <h1>{card.question}</h1>
+                <img src={turnCard} onClick={() => showAnswer(card)} />
+            </FlashcardQuestion>
         )
-    }
-}
-
-function verifyResultColor(result) {
-    switch (result) {
-        case 'zap':
-            return '#2FBE34';
-            break;
-        case 'almost':
-            return '#FF922E';
-            break;
-        case "forgot":
-            return '#FF3030';
-            break;
-        default:
-            return '#333333';
     }
 }
 
@@ -80,8 +75,19 @@ const FlashcardDefault = styled.li`
         font-family: 'Recursive', sans-serif;
         font-weight: 700;
         font-size: 16px;
-        color: ${props => verifyResultColor(props.zapOrNot)};
-        text-decoration: ${props => !props.zapOrNot ? 'none' : 'line-through'};
+        color: ${props => {            
+            switch (props.status){
+                case 'zap':  
+                    return ZAP;
+                case 'almost': 
+                    return ALMOST;
+                case 'forgot': 
+                    return FORGOT;
+                default : 
+                    return DEFAULT;
+            }
+        }};
+        text-decoration: ${props => props.status === 'default' ? 'none' : 'line-through'};
     }
     img{
         width: 20px;
@@ -152,16 +158,5 @@ const Buttons = styled.button`
     font-size: 12px;
     font-weight: 400;
     border: none;
-`;
-
-const ForgotButton = styled(Buttons)`
-    background-color: #FF3030;
-`;
-
-const AlmostButton = styled(Buttons)`
-    background-color: #FF922E;
-`;
-
-const ZapButton = styled(Buttons)`
-    background-color: #2FBE34;
+    background-color: ${props => props.color}
 `;
