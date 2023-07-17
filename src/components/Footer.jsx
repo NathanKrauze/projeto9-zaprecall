@@ -3,7 +3,7 @@ import { styled } from "styled-components"
 export default function Footer({cardsNumber, counter}){
     return(
         <DivFooter>
-            <h1>{counter}/{cardsNumber} CONCLUÍDOS</h1>
+            <h1 data-test="footer">{counter}/{cardsNumber} CONCLUÍDOS</h1>
         </DivFooter>
     )
 }
